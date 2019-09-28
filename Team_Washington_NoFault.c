@@ -24,7 +24,7 @@ struct Student {
 
 char *concat(const char *s1, const char *s2) {
     char *result = malloc(strlen(s1) + strlen(s2) + 1); // +1 for the null-terminator
-    // TODO check for errors in malloc here
+    // in real code you would check for errors in malloc here
     strcpy(result, s1);
     strcat(result, s2);
     return result;
@@ -323,17 +323,23 @@ int main() {
 
         } else if (strcasecmp(command, "delete") == 0) {
 
-            char *partial_path = concat("student_data/", selected_student->usf_id);
-            char *path = concat(partial_path, ".txt");
-            free(partial_path);
+            if (selected_student != NULL) {
 
-            if (remove(path) == 0)
-                printf("Student deleted successfully\n");
-            else
-                printf("Unable to delete student\n");
+                char *partial_path = concat("student_data/", selected_student->usf_id);
+                char *path = concat(partial_path, ".txt");
+                free(partial_path);
 
-            free(path);
-            free(selected_student);
+                if (remove(path) == 0)
+                    printf("Student deleted successfully\n");
+                else
+                    printf("Unable to delete student\n");
+
+                free(path);
+                free(selected_student);
+
+            } else {
+                printf("Error: No student selected.\n");
+            }
 
         } else if (strcasecmp(command, "quit") == 0 || strcasecmp(command, "stop") == 0) {
             break;
