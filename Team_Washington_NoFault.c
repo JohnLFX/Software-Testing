@@ -146,7 +146,8 @@ bool saveStudent(struct Student *student) {
 
     // Close the text file
     fclose(fp);
-
+    
+    return true;
 }
 
 /**
